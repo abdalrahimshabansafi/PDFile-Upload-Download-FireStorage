@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listPDFFIle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:text="@string/pdf_app_reader_upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/uploadPDFFile"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:text="@string/upload_an_pdf_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePDFFile" />
+
+    <Button
+        android:id="@+id/btnPDFFileDownload"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:text="@string/download_this_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePDFFileDownload" />
+
+    <EditText
+        android:id="@+id/namePDFFile"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:fontFamily="@font/medium"
+        android:hint="@string/pdf_file_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/uploadPDFFile"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/uploadPDFFile"
+        app:layout_constraintTop_toBottomOf="@+id/fileShow" />
+
+    <EditText
+        android:id="@+id/namePDFFileDownload"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:fontFamily="@font/medium"
+        android:hint="@string/pdf_file_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/uploadPDFFile"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/uploadPDFFile"
+        app:layout_constraintTop_toBottomOf="@+id/uploadPDFFile" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:fontFamily="@font/bold"
+        android:text="KotlinApp"
+        android:textColor="#673AB7"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fileShow"
+        android:layout_width="118dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/baseline_upload_file_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PDFReaderUpload</string>
+    <string name="pdf_app_reader_upload"><![CDATA[PDF APP READER & UPLOAD]]></string>
+    <string name="upload_an_pdf_file">Upload An PDF FILE</string>
+    <string name="pdf_file_name">PDF File Name</string>
+    <string name="download_this_file">DOWNLOAD THIS FILE</string>
+</resources>

@@ -8,7 +8,6 @@ Implimntaions :
 - FireBase
 - FileManger
 
-ScreenShot :
 
 ![OWINJ61](https://user-images.githubusercontent.com/96925663/226141208-29324daa-463b-438b-80e5-f39b8c23e716.png)
 

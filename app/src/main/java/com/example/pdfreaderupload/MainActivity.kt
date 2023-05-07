@@ -11,10 +11,14 @@ import android.os.Environment
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.pdfreaderupload.databinding.ActivityMainBinding
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var analytics: FirebaseAnalytics
     private var binding: ActivityMainBinding? = null
     private var pdfRef = Firebase.storage.reference
     private val storageRef = Firebase.storage.reference
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         progressDialog = ProgressDialog(this@MainActivity)
+        analytics = Firebase.analytics
 
         binding!!.fileShow.setOnClickListener {
             Intent(Intent.ACTION_GET_CONTENT).also {
@@ -41,25 +46,27 @@ class MainActivity : AppCompatActivity() {
                 progressDialog.setTitle("Upload PDF File")
                 progressDialog.setMessage("Loading... ")
                 progressDialog.show()
+                selectCountEvent("F01", "UploadImage", "Image")
 
             } else {
                 binding!!.namePDFFile.error = "Empty Value!"
             }
         }
         binding!!.btnPDFFileDownload.setOnClickListener {
-            if (binding!!.namePDFFileDownload.text.isNotEmpty()){
+            if (binding!!.namePDFFileDownload.text.isNotEmpty()) {
                 val nameDownFile = binding!!.namePDFFileDownload.text.toString().trim()
                 val downloadRef = storageRef.child("files/$nameDownFile")
                 progressDialog.setTitle("Download PDF File")
                 progressDialog.setMessage("Loading... ")
                 progressDialog.show()
+                trackScreenEventP()
                 val towMEGABYTE: Long = 2048 * 2048
                 downloadRef.downloadUrl.addOnSuccessListener {
                     startDownload(it)
                     progressDialog.dismiss()
-                    Toast.makeText(this,"Download File, Successfully!",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Download File, Successfully!", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
-                    Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                     progressDialog.dismiss()
                 }
             } else {
@@ -68,43 +75,63 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-        private var pdfLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result ->
-            if (result.resultCode == RESULT_OK){
+
+    private var pdfLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
                 result?.data?.data?.let {
                     currentFile = it
                     binding!!.fileShow.setImageResource(R.drawable.baseline_picture_as_pdf_24)
                 }
-            }else{
-                Toast.makeText(this,"Canceled!",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Canceled!", Toast.LENGTH_SHORT).show()
             }
-    }
-    private fun uploadPDFFileStorage(filename: String){
+        }
+
+    private fun uploadPDFFileStorage(filename: String) {
         try {
             currentFile?.let {
                 pdfRef.child("files/${filename}").putFile(it).addOnSuccessListener {
-                    Toast.makeText(this,"Upload File, Successfully!",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Upload File, Successfully!", Toast.LENGTH_SHORT).show()
                     binding!!.namePDFFile.text.clear()
                     progressDialog.dismiss()
-                }.addOnFailureListener{
-                    Toast.makeText(this,"Upload File, Field!",Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Upload File, Field!", Toast.LENGTH_SHORT).show()
                     progressDialog.dismiss()
                 }
             }
 
-        }catch (e: Exception){
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
-    private fun startDownload(DataUrl: Uri){
+
+    private fun startDownload(DataUrl: Uri) {
         val request = DownloadManager.Request(DataUrl)
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setTitle("Download")
         request.setDescription("Your File is Downloading...")
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"${(System.currentTimeMillis())}")
-        val  manger = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        request.setDestinationInExternalPublicDir(
+            Environment.DIRECTORY_DOWNLOADS,
+            "${(System.currentTimeMillis())}"
+        )
+        val manger = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manger.enqueue(request)
+    }
+
+    fun selectCountEvent(id: String, name: String, contentType: String) {
+        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+            param(FirebaseAnalytics.Param.ITEM_ID, id)
+            param(FirebaseAnalytics.Param.ITEM_NAME, name)
+            param(FirebaseAnalytics.Param.CONTENT_TYPE, contentType)
+            }
+        }
+        fun trackScreenEventP() {
+            analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+                param(FirebaseAnalytics.Param.SCREEN_NAME, "main")
+                param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
+        }
     }
 }

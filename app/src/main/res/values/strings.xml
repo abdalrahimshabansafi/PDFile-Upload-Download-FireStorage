@@ -4,4 +4,5 @@
     <string name="upload_an_pdf_file">Upload An PDF FILE</string>
     <string name="pdf_file_name">PDF File Name</string>
     <string name="download_this_file">DOWNLOAD THIS FILE</string>
+    <string name="ste"><![CDATA[Offloading & VideoStreaming\n]]></string>
 </resources>

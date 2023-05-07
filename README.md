@@ -30,6 +30,15 @@ Record Screen :
 
 https://user-images.githubusercontent.com/96925663/225491645-b0dd026f-d4eb-49cc-8e7a-fd29393b2162.mp4
 
+### 🤝🏻 &nbsp;ExoPlayer Declartaion
+Offloading & video_streaming
+
+
+Record Screen :
+
+
+https://user-images.githubusercontent.com/96925663/236698825-b52b2a89-0d24-4e84-a052-83ff217a8df6.mp4
+
 
 
 
